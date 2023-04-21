@@ -58,7 +58,7 @@ public class BookDAOImpl implements BookDAO {
         List<Book> allBookList = new ArrayList<>();
 
         ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
+        while(rs.next()) {
             int oid = rs.getInt("id");
             String title = rs.getString("title");
             String author = rs.getString("author");

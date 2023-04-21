@@ -85,4 +85,30 @@ public class EmployeeSpringBootProjectApplication {
 		return bookList;
 	}
 
+	@DeleteMapping("/delete/{requestedId}")
+	public String deleteBook(@PathVariable int requestedId) throws SQLException, JsonProcessingException {
+		BookDAO bookDAO = new BookDAOImpl();
+		Book book = bookDAO.get(requestedId);
+		Map<String, Object> object = new HashMap<>();
+		ObjectMapper objectMapper = new ObjectMapper();
+		if (book != null) {
+			int result = bookDAO.delete(book);
+			if (result == 1) {
+				object.put("response", "OK");
+			} else {
+				System.out.println(result);
+				object.put("errorCode", "500");
+				object.put("errorMessage", "Error in response");
+			}
+		} else {
+			object.put("response", "OK");
+			object.put("code", "DBNULL");
+			object.put("message", "Object doesn't exists in DB");
+		}
+		
+		return objectMapper.writeValueAsString(object);
+	}
+
+
+
 }
