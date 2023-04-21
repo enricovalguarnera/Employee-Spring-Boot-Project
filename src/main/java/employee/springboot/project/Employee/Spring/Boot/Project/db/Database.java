@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class Database {
 
-    private  static String url = "jdbc:sqlite:/Users/evalguarne001/Documents/my-db";
+    private  static String url = "jdbc:sqlite:/Users/enry_/OneDrive/Documentos/Bookshelf/my-db";
     private static String user = "root";
     private static String password = "password";
 
