@@ -77,6 +77,7 @@ public class EmployeeSpringBootProjectApplication {
 		return mapper.writeValueAsString(object) ;
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping("/all")
 	public List<Book> getAllBooks() throws SQLException {
 		BookDAO bookDAO = new BookDAOImpl();
