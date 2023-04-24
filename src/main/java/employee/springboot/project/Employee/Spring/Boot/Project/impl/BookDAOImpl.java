@@ -81,6 +81,49 @@ public class BookDAOImpl implements BookDAO {
         
     }
 
+
+    @Override
+    public List<Book> getSearch(String searchStr) throws SQLException {
+        Connection con = Database.getConnetcion();
+        String sql = "SELECT * FROM books WHERE (title like ?) OR (author like ?) " + 
+            " OR (editor like ?) OR (totalpage like ?) OR (genre like ?) OR (publicationdate like ?) " + 
+            " OR (description like ?) OR (language like ?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+        searchStr = '%' + searchStr + '%'; // full text search
+        ps.setString(1, searchStr);
+        ps.setString(2, searchStr);
+        ps.setString(3, searchStr);
+        ps.setString(4, searchStr);
+        ps.setString(5, searchStr);
+        ps.setString(6, searchStr);
+        ps.setString(7, searchStr);
+        ps.setString(8, searchStr);
+        
+        List<Book> allBookList = new ArrayList<>();
+
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()) {
+            int oid = rs.getInt("id");
+            String title = rs.getString("title");
+            String author = rs.getString("author");
+            String editor = rs.getString("editor");
+            int totalpage = rs.getInt("totalpage");
+            String genre = rs.getString("genre");
+            String publicationdate = rs.getString("publicationdate");
+            String description = rs.getString("description");
+            String language = rs.getString("language");
+            int volume = rs.getInt("volume");
+            int price = rs.getInt("price");
+
+            Book currentBook = new Book(oid, title, author, editor, totalpage, genre, publicationdate, description, language, volume, price);
+            allBookList.add(currentBook);
+        }
+
+        Database.closePrepareStatement(ps);
+        Database.closeConnection(con);
+        return allBookList;
+    }
+
     @Override
     public int save(Book t) throws SQLException {
         // TODO Auto-generated method stub
@@ -147,4 +190,6 @@ public class BookDAOImpl implements BookDAO {
 
         return result;
     }
+
+    
 }

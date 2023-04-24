@@ -86,6 +86,15 @@ public class EmployeeSpringBootProjectApplication {
 		return bookList;
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping("/search/{searchParam}")
+	public List<Book> getSearch(@PathVariable String searchParam) throws SQLException {
+		BookDAO bookDAO = new BookDAOImpl();
+		List<Book> bookList = new ArrayList<>();
+		bookList = bookDAO.getSearch(searchParam);
+		return bookList;
+	}
+
 	@DeleteMapping("/delete/{requestedId}")
 	public String deleteBook(@PathVariable int requestedId) throws SQLException, JsonProcessingException {
 		BookDAO bookDAO = new BookDAOImpl();
