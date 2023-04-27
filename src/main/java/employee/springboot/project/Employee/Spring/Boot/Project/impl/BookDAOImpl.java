@@ -144,12 +144,12 @@ public class BookDAOImpl implements BookDAO {
         ps.setString(7, book.getDescription());
         ps.setString(8, book.getLanguage());
         ps.setInt(9, book.getVolume());
-        ps.setInt(9, book.getPrice());
+        ps.setInt(10, book.getPrice());
 
         int result = ps.executeUpdate();
 
-        ps.close();
-        con.close();
+        Database.closePrepareStatement(ps);
+        Database.closeConnection(con);
         return result;
     }
 
@@ -171,8 +171,8 @@ public class BookDAOImpl implements BookDAO {
         ps.setInt(11, book.getId());
 
         int result = ps.executeUpdate();
-        ps.close();
-        con.close();
+        Database.closePrepareStatement(ps);
+        Database.closeConnection(con);
         return result;
     }
 

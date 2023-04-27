@@ -43,6 +43,7 @@ public class EmployeeSpringBootProjectApplication {
 
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping("/add-book")
 	public String addBook(@RequestBody Book newBook) throws SQLException, JsonProcessingException {
 		BookDAO bookDAO = new BookDAOImpl();
@@ -59,6 +60,7 @@ public class EmployeeSpringBootProjectApplication {
 		return mapper.writeValueAsString(object) ;
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@PutMapping("/modify")
 	public String updateBook(@RequestBody Book book) throws SQLException, JsonProcessingException {
 
