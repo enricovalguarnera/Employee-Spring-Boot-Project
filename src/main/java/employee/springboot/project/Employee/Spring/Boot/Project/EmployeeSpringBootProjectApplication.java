@@ -30,6 +30,7 @@ public class EmployeeSpringBootProjectApplication {
 		SpringApplication.run(EmployeeSpringBootProjectApplication.class, args);
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping("/book/{requestedId}")
 	public Book getBook(@PathVariable int requestedId) throws SQLException {
 		BookDAO bookDAO = new BookDAOImpl();
@@ -97,6 +98,7 @@ public class EmployeeSpringBootProjectApplication {
 		return bookList;
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@DeleteMapping("/delete/{requestedId}")
 	public String deleteBook(@PathVariable int requestedId) throws SQLException, JsonProcessingException {
 		BookDAO bookDAO = new BookDAOImpl();
