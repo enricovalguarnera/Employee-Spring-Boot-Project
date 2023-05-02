@@ -133,7 +133,7 @@ public class EmployeeSpringBootProjectApplication {
 		int count = bookDAO.getCountAllBooks();
 		int totalPriceAmount = bookDAO.getTotalPriceAmount();
 		int totalPageCount = bookDAO.getTotalPageCount();
-		Map<String, Integer> genreCount = bookDAO.getGerneCountList();
+		List<Map<String, Object>> genreCount = bookDAO.getGerneCountList();
 
 		map.put("count", count);
 		map.put("totalPriceAmount", totalPriceAmount);

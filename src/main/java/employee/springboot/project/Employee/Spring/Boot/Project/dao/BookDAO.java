@@ -10,5 +10,5 @@ public interface BookDAO extends DAO<Book> {
     int getCountAllBooks() throws SQLException;
     int getTotalPriceAmount() throws SQLException;
     int getTotalPageCount() throws SQLException;
-    Map<String, Integer> getGerneCountList() throws SQLException;
+    <List<Map<String, Object>> getGerneCountList() throws SQLException;
 }

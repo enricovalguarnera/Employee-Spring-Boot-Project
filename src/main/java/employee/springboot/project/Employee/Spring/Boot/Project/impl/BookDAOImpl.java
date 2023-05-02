@@ -225,17 +225,20 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public Map<String, Integer> getGerneCountList() throws SQLException {
+    public List<Map<String, Object>> getGerneCountList() throws SQLException {
         Connection con = Database.getConnetcion();
         String sql = "SELECT genre, COUNT(*) as genreCount FROM books WHERE genre != '' GROUP BY genre";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
-        Map<String, Integer> genreListCount = new HashMap<>();
+        List<Map<String, Object>> genreListCount = new ArrayList<>();
         while (rs.next()) {
+            Map<String, Object> genreCountObj = new HashMap<>();
             String genre = rs.getString("genre");
             int genreCount = rs.getInt("genreCount");
-            genreListCount.put(genre, genreCount);
+            genreCountObj.put("genre",genre);
+            genreCountObj.put("count", genreCount);
+            genreListCount.add(genreCountObj);
         }
         Database.closePrepareStatement(ps);
         Database.closeConnection(con);
