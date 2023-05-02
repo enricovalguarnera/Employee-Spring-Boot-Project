@@ -2,7 +2,11 @@ package employee.springboot.project.Employee.Spring.Boot.Project.impl;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.xml.crypto.Data;
 
 import org.springframework.validation.DataBinder;
 
@@ -80,7 +84,6 @@ public class BookDAOImpl implements BookDAO {
         return allBookList;
         
     }
-
 
     @Override
     public List<Book> getSearch(String searchStr) throws SQLException {
@@ -191,5 +194,68 @@ public class BookDAOImpl implements BookDAO {
         return result;
     }
 
+    @Override
+    public int getCountAllBooks() throws SQLException {
+        Connection con = Database.getConnetcion();
+        String sql = "SELECT COUNT(*) as count FROM books";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        int result = 0;
+        if (rs.next()) {
+            result = rs.getInt("count");
+        }
+        Database.closePrepareStatement(ps);
+        Database.closeConnection(con);
+        return result;
+    }
+
+    @Override
+    public int getTotalPriceAmount() throws SQLException {
+        Connection con = Database.getConnetcion();
+        String sql = "SELECT SUM(price) as totalPriceAmount FROM books";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        int sumPrice = 0;
+        if (rs.next()) {
+            sumPrice = rs.getInt("totalPriceAmount");
+        }
+        Database.closePrepareStatement(ps);
+        Database.closeConnection(con);
+        return sumPrice;
+    }
+
+    @Override
+    public Map<String, Integer> getGerneCountList() throws SQLException {
+        Connection con = Database.getConnetcion();
+        String sql = "SELECT genre, COUNT(*) as genreCount FROM books WHERE genre != '' GROUP BY genre";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        Map<String, Integer> genreListCount = new HashMap<>();
+        while (rs.next()) {
+            String genre = rs.getString("genre");
+            int genreCount = rs.getInt("genreCount");
+            genreListCount.put(genre, genreCount);
+        }
+        Database.closePrepareStatement(ps);
+        Database.closeConnection(con);
+
+        return genreListCount;
+    }
+
+    @Override
+    public int getTotalPageCount() throws SQLException {
+        Connection con = Database.getConnetcion();
+        String sql = "SELECT SUM(totalpage) as totalPageCount FROM books";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        int totalPageCount = 0;
+        if (rs.next()) {
+            totalPageCount = rs.getInt("totalPageCount");
+        }
+        Database.closePrepareStatement(ps);
+        Database.closeConnection(con);
+        return totalPageCount;
+    }
     
 }

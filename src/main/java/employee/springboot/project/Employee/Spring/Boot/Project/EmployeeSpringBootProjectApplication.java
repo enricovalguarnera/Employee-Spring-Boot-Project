@@ -71,7 +71,7 @@ public class EmployeeSpringBootProjectApplication {
 
 		ObjectMapper mapper = new ObjectMapper();
 		if (result == 1) {
-			object.put("response", "OK");
+			object.put("response", "OK"); 
 		} else {
 			System.out.println(result);
 			object.put("errorCode", "500");
@@ -123,6 +123,25 @@ public class EmployeeSpringBootProjectApplication {
 		return objectMapper.writeValueAsString(object);
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping("/insights")
+	public String getInsights() throws SQLException, JsonProcessingException {
+		BookDAO bookDAO = new BookDAOImpl();
+		Map<String, Object> map = new HashMap<>();
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		int count = bookDAO.getCountAllBooks();
+		int totalPriceAmount = bookDAO.getTotalPriceAmount();
+		int totalPageCount = bookDAO.getTotalPageCount();
+		Map<String, Integer> genreCount = bookDAO.getGerneCountList();
+
+		map.put("count", count);
+		map.put("totalPriceAmount", totalPriceAmount);
+		map.put("genreCount", genreCount);
+		map.put("totalPageCount", totalPageCount);
+
+		return objectMapper.writeValueAsString(map);
+	}
 
 
 }
